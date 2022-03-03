@@ -45,7 +45,8 @@ if [[ -f "$hosts_file" ]]; then
     export HOST_TITLE="SSH Host"
 fi
 
-PR_SHA=$(cat $GITHUB_EVENT_PATH | jq -r .pull_request.head.sha)
+#PR_SHA=$(cat $GITHUB_EVENT_PATH | jq -r .pull_request.head.sha)
+PR_SHA=$(curl -H "Accept: application/vnd.github.v3+json"  https://api.github.com/repos/singhritesh750/solana/pulls | jq .[0] | jq -r .head.sha)
 [[ 'null' != $PR_SHA ]] && export GITHUB_SHA="$PR_SHA"
 
 if [[ -n "$SITE_NAME" ]]; then
